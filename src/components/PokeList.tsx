@@ -22,14 +22,14 @@ const PokeList = () => {
   if (isLoading) return <h1>Loading...</h1>;
   if (isError) return <h1>Error...</h1>;
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div className="flex">
       <InfiniteScroll
         dataLength={dataLength as number}
         next={() => fetchNextPage()}
         hasMore={hasNextPage ? true : false}
         loader={<h4>Loading...</h4>}
       >
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>
+        <div className="flex flex-wrap gap-4">
           {data.pages.map((page) =>
             page.pokemon.map((pokemon) => (
               <PokeCard
