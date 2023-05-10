@@ -3,17 +3,13 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { getPokemonInfoByName, getPokemonList } from "../api";
 import PokeCard from "./PokeCard";
 import InfiniteScroll from "react-infinite-scroll-component";
+import usePokemonListQuery from "../hooks/usePokemonListQuery";
 
 const PokeList = () => {
-
   const { isLoading, isError, fetchNextPage, hasNextPage, data } =
-    useInfiniteQuery({
-      queryKey: ["pokemonList"],
-      queryFn: ({ pageParam = 0 }) => getPokemonList(pageParam),
-      getNextPageParam: (lastPage) => {
-        return lastPage.nextPage;
-      },
-    });
+    usePokemonListQuery();
+
+  console.log("data", data);
 
   const dataLength = data?.pages.reduce((pokemon, page) => {
     return pokemon + page.pokemon.length;
@@ -22,7 +18,7 @@ const PokeList = () => {
   if (isLoading) return <h1>Loading...</h1>;
   if (isError) return <h1>Error...</h1>;
   return (
-    <div className="flex">
+    <div className="flex" data-testid="infinite-list-container">
       <InfiniteScroll
         dataLength={dataLength as number}
         next={() => fetchNextPage()}

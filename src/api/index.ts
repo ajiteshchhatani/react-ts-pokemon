@@ -3,7 +3,7 @@ import { MainClient, NamedAPIResource, Pokemon } from "pokenode-ts";
 
 const pokeClient = new MainClient();
 
-interface PokemonListResponse {
+export interface PokemonListResponse {
   pokemon: NamedAPIResource[],
   nextPage: number
 }
@@ -11,6 +11,7 @@ interface PokemonListResponse {
 export const getPokemonList = async (pageParam = 0): Promise<PokemonListResponse> => {
   const response = await pokeClient.pokemon.listPokemons(pageParam * 20, 20);
   const { results } = response;
+  console.log("results", results);
   return {
     pokemon: results,
     nextPage: pageParam + 1
