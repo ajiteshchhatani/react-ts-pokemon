@@ -10,6 +10,9 @@ export default {
         "pokecard-21": "1 0 21%"
       }
     },
+    fontFamily: {
+      "roboto": ['Open Sans', 'sans-serif']
+    }
   },
   plugins: [],
 }
