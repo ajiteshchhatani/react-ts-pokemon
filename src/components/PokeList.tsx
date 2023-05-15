@@ -1,10 +1,9 @@
-import React from "react";
 import PokeCard from "./PokeCard";
 import InfiniteScroll from "react-infinite-scroll-component";
 import usePokemonListQuery from "../hooks/usePokemonListQuery";
 
 const PokeList = () => {
-  const { isLoading, isError, isSuccess, fetchNextPage, hasNextPage, data } =
+  const { isLoading, isError, fetchNextPage, hasNextPage, data } =
     usePokemonListQuery();
 
   const dataLength = data?.pages.reduce((pokemon, page) => {
@@ -34,29 +33,28 @@ const PokeList = () => {
     );
   }
 
-  if (isSuccess)
-    return (
-      <div className="flex" data-testid="infinite-list-container">
-        <InfiniteScroll
-          dataLength={dataLength as number}
-          next={() => fetchNextPage()}
-          hasMore={hasNextPage ? true : false}
-          loader={<h4>Loading...</h4>}
-        >
-          <div className="flex flex-wrap gap-4">
-            {data.pages.map((page) =>
-              page.pokemon.map((pokemon) => (
-                <PokeCard
-                  key={pokemon.name}
-                  name={pokemon.name}
-                  url={pokemon.url}
-                />
-              ))
-            )}
-          </div>
-        </InfiniteScroll>
-      </div>
-    );
+  return (
+    <div className="flex" data-testid="infinite-list-container">
+      <InfiniteScroll
+        dataLength={dataLength as number}
+        next={() => fetchNextPage()}
+        hasMore={hasNextPage ? true : false}
+        loader={<h4>Loading...</h4>}
+      >
+        <div className="flex flex-wrap gap-4">
+          {data.pages.map((page) =>
+            page.pokemon.map((pokemon) => (
+              <PokeCard
+                key={pokemon.name}
+                name={pokemon.name}
+                url={pokemon.url}
+              />
+            ))
+          )}
+        </div>
+      </InfiniteScroll>
+    </div>
+  );
 };
 
 export default PokeList;
